@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTable extends Migration
+class CreateTasks extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,25 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->mediumText('description');
+            $table->unsignedBigInteger('user_id');
+
+            $table->dateTime('deadline');
+            $table->unsignedBigInteger('location_id')->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
         });
+
+
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('location_id')->references('id')->on('locations');
+        });
+
     }
+
 
     /**
      * Reverse the migrations.
