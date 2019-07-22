@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Occasion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreOccasion;
 use Illuminate\Http\Response;
 
 class OccasionController extends Controller
@@ -32,30 +33,23 @@ class OccasionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreOccasion $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreOccasion $request)
     {
-//        Validates User Input
-        $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'startDate' => 'required|date',
-            'startTime' => 'required|date_format:H:i',
-            'endDate' => 'required|date',
-            'endTime' => 'required|date_format:H:i',
-        ]);
-
         try {
             $occasion = new Occasion();
             $occasion->name = $request->name;
             $occasion->description = $request->description;
+            $occasion->latitude = $request->latitude;
+            $occasion->longitude = $request->longitude;
             $occasion->from_date = Carbon::parse("$request->endTime $request->endDate");
             $occasion->to_date = Carbon::parse("$request->endTime $request->endDate");
             $occasion->user_id = auth()->user()->id;
             $occasion->save();
 
+//            TODO: change to return view
             return response(['success' => true, 'message' => 'Occasion created!']);
         } catch (\Exception $exception) {
             //  todo: return response

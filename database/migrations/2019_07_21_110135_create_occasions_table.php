@@ -20,8 +20,8 @@ class CreateOccasionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->dateTime('from_date');
             $table->dateTime('to_date');
-            $table->unsignedBigInteger('location_id')->nullable();
-
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,7 +29,6 @@ class CreateOccasionsTable extends Migration
 
         Schema::table('occasions', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('location_id')->references('id')->on('locations');
         });
     }
 

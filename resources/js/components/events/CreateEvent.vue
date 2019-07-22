@@ -34,7 +34,10 @@
                     </div>
 
                     <!--                    TODO: add location-->
-                    <location></location>
+
+                    <div class="form-group">
+                        <location class="location" v-on:setLatLong="setLatLong"></location>
+                    </div>
 
                     <div @click="createOccasion" class="btn btn-primary">Create Occasion</div>
                 </form>
@@ -45,7 +48,7 @@
 
 <script>
     import axios from 'axios';
-    import location from '../maps/map';
+    import location from '../maps/Location';
 
     export default {
         components: {
@@ -59,7 +62,9 @@
                 startDate: '2019-08-17',
                 startTime: '16:00',
                 endDate: '2019-08-20',
-                endTime: '08:00'
+                endTime: '08:00',
+                latitude: '',
+                longitude: ''
             }
         },
         methods: {
@@ -71,6 +76,8 @@
                     startTime: this.startTime,
                     endDate: this.endDate,
                     endTime: this.endTime,
+                    latitude: this.latitude,
+                    longitude: this.longitude
                 })
                     .then(function (response) {
                         console.log(response);
@@ -78,12 +85,17 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            setLatLong(latLong) {
+                this.longitude = latLong.long;
+                this.latitude = latLong.lat;
             }
         },
 
-
-        mounted() {
-
-        }
     }
 </script>
+<style scoped>
+    .location {
+        margin: 24px 0 24px 0;
+    }
+</style>
