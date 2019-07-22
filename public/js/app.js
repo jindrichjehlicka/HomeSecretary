@@ -1873,6 +1873,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _maps_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../maps/map */ "./resources/js/components/maps/map.vue");
+//
 //
 //
 //
@@ -1918,7 +1920,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    location: _maps_map__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       //TODO: delete after testing
@@ -1947,6 +1953,62 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/map.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/map.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      latitude: '',
+      longitude: ''
+    };
+  },
+  methods: {
+    getCurrentLocation: function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      }
+    },
+    showPosition: function showPosition(position) {
+      console.log(position); // let latlon = position.coords.latitude + "," + position.coords.longitude;
+      // console.log(latlon);
+    }
+  },
+  mounted: function mounted() {
+    var platform = new H.service.Platform({
+      'apikey': '9ikH2Uo_Ngu304J96SFsi9KKRe9mL628WHqmAR2I0JA'
+    });
+    var defaultLayers = platform.createDefaultLayers(); // Instantiate (and display) a map object:
+
+    var map = new H.Map(document.getElementById('mapContainer'), defaultLayers.vector.normal.map, {
+      zoom: 10,
+      center: {
+        lat: 52.5,
+        lng: 13.4
+      }
+    });
+  }
 });
 
 /***/ }),
@@ -37295,199 +37357,253 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("form", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionName" } }, [_vm._v("Name")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", id: "occasionName", placeholder: "Name" },
-              domProps: { value: _vm.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+        _c(
+          "form",
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "occasionName" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
                   }
-                  _vm.name = $event.target.value
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "occasionName",
+                  placeholder: "Name"
+                },
+                domProps: { value: _vm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
                 }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionDescription" } }, [
-              _vm._v("Description")
+              })
             ]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.description,
-                  expression: "description"
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "occasionDescription" } }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "occasionDescription",
+                  placeholder: "Description"
+                },
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
                 }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "occasionDescription",
-                placeholder: "Description"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "occasionStartDate" } }, [
+                _vm._v("Start Date")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.startDate,
+                    expression: "startDate"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "date",
+                  id: "occasionStartDate",
+                  placeholder: "Starts.."
+                },
+                domProps: { value: _vm.startDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.startDate = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "occasionStartTime" } }, [
+                _vm._v("Start Time")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.startTime,
+                    expression: "startTime"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "time",
+                  id: "occasionStartTime",
+                  placeholder: ""
+                },
+                domProps: { value: _vm.startTime },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.startTime = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group " }, [
+              _c("label", { attrs: { for: "occasionEndDate" } }, [
+                _vm._v("End Date")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.endDate,
+                    expression: "endDate"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "date",
+                  id: "occasionEndDate",
+                  placeholder: "Ends..."
+                },
+                domProps: { value: _vm.endDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.endDate = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group " }, [
+              _c("label", { attrs: { for: "occasionEndTime" } }, [
+                _vm._v("End Time")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.endTime,
+                    expression: "endTime"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "time", id: "occasionEndTime", placeholder: "" },
+                domProps: { value: _vm.endTime },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.endTime = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("location"),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn btn-primary",
+                on: { click: _vm.createOccasion }
               },
-              domProps: { value: _vm.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.description = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionStartDate" } }, [
-              _vm._v("Start Date")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.startDate,
-                  expression: "startDate"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                id: "occasionStartDate",
-                placeholder: "Starts.."
-              },
-              domProps: { value: _vm.startDate },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.startDate = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionStartTime" } }, [
-              _vm._v("Start Time")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.startTime,
-                  expression: "startTime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "time", id: "occasionStartTime", placeholder: "" },
-              domProps: { value: _vm.startTime },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.startTime = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group " }, [
-            _c("label", { attrs: { for: "occasionEndDate" } }, [
-              _vm._v("End Date")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.endDate,
-                  expression: "endDate"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                id: "occasionEndDate",
-                placeholder: "Ends..."
-              },
-              domProps: { value: _vm.endDate },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.endDate = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group " }, [
-            _c("label", { attrs: { for: "occasionEndTime" } }, [
-              _vm._v("End Time")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.endTime,
-                  expression: "endTime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "time", id: "occasionEndTime", placeholder: "" },
-              domProps: { value: _vm.endTime },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.endTime = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.createOccasion }
-            },
-            [_vm._v("Create Occasion")]
-          )
-        ])
+              [_vm._v("Create Occasion")]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", {
+            staticStyle: { width: "640px", height: "480px" },
+            attrs: { id: "mapContainer" }
+          })
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -49865,6 +49981,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/maps/map.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/maps/map.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.vue?vue&type=template&id=fe75d5a2& */ "./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2&");
+/* harmony import */ var _map_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map.vue?vue&type=script&lang=js& */ "./resources/js/components/maps/map.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _map_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/maps/map.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/maps/map.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/maps/map.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_map_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./map.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/map.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_map_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./map.vue?vue&type=template&id=fe75d5a2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/map.vue?vue&type=template&id=fe75d5a2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_map_vue_vue_type_template_id_fe75d5a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49883,8 +50068,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\homeSecretary\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\homeSecretary\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\HomeSecretary\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\HomeSecretary\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

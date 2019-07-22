@@ -34,6 +34,7 @@
                     </div>
 
                     <!--                    TODO: add location-->
+                    <location></location>
 
                     <div @click="createOccasion" class="btn btn-primary">Create Occasion</div>
                 </form>
@@ -44,9 +45,12 @@
 
 <script>
     import axios from 'axios';
+    import location from '../maps/map';
 
     export default {
-
+        components: {
+            location
+        },
         data() {
             return {
                 //TODO: delete after testing
