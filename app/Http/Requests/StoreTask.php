@@ -4,7 +4,7 @@ namespace HomeSecretary\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOccasion extends FormRequest
+class storeTask extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,6 @@ class StoreOccasion extends FormRequest
      */
     public function authorize()
     {
-//        TODO
         return true;
     }
 
@@ -27,10 +26,8 @@ class StoreOccasion extends FormRequest
         return [
             'name' => 'required|max:255',
             'description' => 'required|max:255',
-            'startDate' => 'required|date',
-            'startTime' => 'required|date_format:H:i',
-            'endDate' => 'required|date',
-            'endTime' => 'required|date_format:H:i',
+            'deadlineDate' => 'required|date',
+            'deadlineTime' => 'required|date_format:H:i',
         ];
     }
 }

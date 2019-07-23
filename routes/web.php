@@ -11,20 +11,19 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes();
-
 
 Route::get('/', 'HomeController@index')->name('home');
 
 //Occasions
-
 Route::get('/occasions', 'OccasionController@index')->name('occasions.index')->middleware('auth');
 Route::get('/occasions/create', 'OccasionController@create')->name('occasions.create')->middleware('auth');
 Route::post('/occasions/store', 'OccasionController@store')->name('occasions.store')->middleware('auth');
+
+//tasks
+Route::get('/tasks', 'TaskController@index')->name('tasks.index')->middleware('auth');
+Route::get('/tasks/create', 'TaskController@create')->name('tasks.create')->middleware('auth');
+Route::post('/tasks/store', 'TaskController@store')->name('tasks.store')->middleware('auth');
 
 
 

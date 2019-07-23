@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace HomeSecretary\Http\Controllers;
 
-use App\Occasion;
+use HomeSecretary\Occasion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreOccasion;
+use HomeSecretary\Http\Requests\StoreOccasion;
 use Illuminate\Http\Response;
 
 class OccasionController extends Controller
@@ -17,7 +17,11 @@ class OccasionController extends Controller
      */
     public function index()
     {
-        return view('occasions.index');
+        $userId = auth()->user()->id;
+
+        $occasions = Occasion::where('user_id', $userId)->get();
+
+        return view('occasions.index')->with(['occasions' => $occasions]);
     }
 
     /**
@@ -60,7 +64,7 @@ class OccasionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function show(Occasion $occasion)
@@ -71,7 +75,7 @@ class OccasionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function edit(Occasion $occasion)
@@ -83,7 +87,7 @@ class OccasionController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function update(Request $request, Occasion $occasion)
@@ -94,7 +98,7 @@ class OccasionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function destroy(Occasion $occasion)

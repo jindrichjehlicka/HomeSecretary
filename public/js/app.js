@@ -1922,11 +1922,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     location: _maps_Location__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    type: {
+      type: String,
+      required: false,
+      "default": 'occasion'
+    }
   },
   data: function data() {
     return {
@@ -1938,21 +1961,16 @@ __webpack_require__.r(__webpack_exports__);
       endDate: '2019-08-20',
       endTime: '08:00',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      deadlineDate: '2019-08-20',
+      deadlineTime: '08:00'
     };
   },
   methods: {
-    createOccasion: function createOccasion() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/occasions/store', {
-        name: this.name,
-        description: this.description,
-        startDate: this.startDate,
-        startTime: this.startTime,
-        endDate: this.endDate,
-        endTime: this.endTime,
-        latitude: this.latitude,
-        longitude: this.longitude
-      }).then(function (response) {
+    createEvent: function createEvent() {
+      console.log("/".concat(this.type, "s/store"));
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/".concat(this.type, "s/store"), this.params).then(function (response) {
+        //add alert
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -1962,6 +1980,31 @@ __webpack_require__.r(__webpack_exports__);
       this.longitude = latLong["long"];
       this.latitude = latLong.lat;
     }
+  },
+  computed: {
+    params: function params() {
+      var params = {
+        name: this.name,
+        description: this.description,
+        latitude: this.latitude,
+        longitude: this.longitude
+      };
+
+      if (this.type === 'occasion') {
+        params.startDate = this.startDate;
+        params.startTime = this.startTime;
+        params.endDate = this.endDate;
+        params.endTime = this.endTime;
+      } else if (this.type === 'task') {
+        params.deadlineDate = this.deadlineDate;
+        params.deadlineTime = this.deadlineTime;
+      }
+
+      return params;
+    }
+  },
+  mounted: function mounted() {
+    console.log(this);
   }
 });
 
@@ -38120,144 +38163,219 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionStartDate" } }, [
-              _vm._v("Start Date")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.startDate,
-                  expression: "startDate"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                id: "occasionStartDate",
-                placeholder: "Starts.."
-              },
-              domProps: { value: _vm.startDate },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.startDate = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "occasionStartTime" } }, [
-              _vm._v("Start Time")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.startTime,
-                  expression: "startTime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "time", id: "occasionStartTime", placeholder: "" },
-              domProps: { value: _vm.startTime },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.startTime = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group " }, [
-            _c("label", { attrs: { for: "occasionEndDate" } }, [
-              _vm._v("End Date")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.endDate,
-                  expression: "endDate"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                id: "occasionEndDate",
-                placeholder: "Ends..."
-              },
-              domProps: { value: _vm.endDate },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.endDate = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group " }, [
-            _c("label", { attrs: { for: "occasionEndTime" } }, [
-              _vm._v("End Time")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.endTime,
-                  expression: "endTime"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "time", id: "occasionEndTime", placeholder: "" },
-              domProps: { value: _vm.endTime },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.endTime = $event.target.value
-                }
-              }
-            })
-          ]),
+          _vm.type === "occasion"
+            ? _c("div", [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "occasionStartDate" } }, [
+                    _vm._v("Start Date")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.startDate,
+                        expression: "startDate"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "date",
+                      id: "occasionStartDate",
+                      placeholder: "Starts.."
+                    },
+                    domProps: { value: _vm.startDate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.startDate = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "occasionStartTime" } }, [
+                    _vm._v("Start Time")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.startTime,
+                        expression: "startTime"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "time",
+                      id: "occasionStartTime",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.startTime },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.startTime = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group " }, [
+                  _c("label", { attrs: { for: "occasionEndDate" } }, [
+                    _vm._v("End Date")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.endDate,
+                        expression: "endDate"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "date",
+                      id: "occasionEndDate",
+                      placeholder: "Ends..."
+                    },
+                    domProps: { value: _vm.endDate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.endDate = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group " }, [
+                  _c("label", { attrs: { for: "occasionEndTime" } }, [
+                    _vm._v("End Time")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.endTime,
+                        expression: "endTime"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "time",
+                      id: "occasionEndTime",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.endTime },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.endTime = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+            : _vm.type === "task"
+            ? _c("div", [
+                _c("div", { staticClass: "form-group " }, [
+                  _c("label", { attrs: { for: "deadlineDate" } }, [
+                    _vm._v("Deadline Date")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.deadlineDate,
+                        expression: "deadlineDate"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "date",
+                      id: "deadlineDate",
+                      placeholder: "Ends..."
+                    },
+                    domProps: { value: _vm.deadlineDate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.deadlineDate = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group " }, [
+                  _c("label", { attrs: { for: "deadlineTime" } }, [
+                    _vm._v("Deadline time")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.deadlineTime,
+                        expression: "deadlineTime"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "time",
+                      id: "deadlineTime",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.deadlineTime },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.deadlineTime = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("location", {
+                      staticClass: "location",
+                      on: { setLatLong: _vm.setLatLong }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "form-group" },
-            [
-              _c("location", {
-                staticClass: "location",
-                on: { setLatLong: _vm.setLatLong }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.createOccasion }
-            },
+            { staticClass: "btn btn-primary", on: { click: _vm.createEvent } },
             [_vm._v("Create Occasion")]
           )
         ])

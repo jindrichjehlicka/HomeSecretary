@@ -18,9 +18,10 @@ class CreateTasks extends Migration
             $table->string('name');
             $table->mediumText('description');
             $table->unsignedBigInteger('user_id');
-
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->dateTime('deadline');
-            $table->unsignedBigInteger('location_id')->nullable();
+
 
             $table->timestamps();
             $table->softDeletes();
@@ -29,7 +30,6 @@ class CreateTasks extends Migration
 
         Schema::table('tasks', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('location_id')->references('id')->on('locations');
         });
 
     }
