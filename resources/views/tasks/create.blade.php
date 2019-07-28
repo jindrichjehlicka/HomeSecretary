@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <create-event :type="'task'"></create-event>
+    <create-task :type="'task'"></create-task>
 
 @endsection

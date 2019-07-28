@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <create-event></create-event>
+    <create-occasion></create-occasion>
 
 @endsection
