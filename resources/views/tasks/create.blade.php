@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <create-occasion></create-occasion>
+    <create-task :type="'task'"></create-task>
 
 @endsection

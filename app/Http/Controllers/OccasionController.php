@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace HomeSecretary\Http\Controllers;
 
-use App\Occasion;
+use HomeSecretary\Occasion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use HomeSecretary\Http\Requests\StoreOccasion;
 use Illuminate\Http\Response;
 
 class OccasionController extends Controller
@@ -16,7 +17,11 @@ class OccasionController extends Controller
      */
     public function index()
     {
-        return view('occasions.index');
+        $userId = auth()->user()->id;
+
+        $occasions = Occasion::where('user_id', $userId)->get();
+
+        return view('occasions.index')->with(['occasions' => $occasions]);
     }
 
     /**
@@ -32,30 +37,23 @@ class OccasionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreOccasion $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreOccasion $request)
     {
-//        Validates User Input
-        $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'startDate' => 'required|date',
-            'startTime' => 'required|date_format:H:i',
-            'endDate' => 'required|date',
-            'endTime' => 'required|date_format:H:i',
-        ]);
-
         try {
             $occasion = new Occasion();
             $occasion->name = $request->name;
             $occasion->description = $request->description;
+            $occasion->latitude = $request->latitude;
+            $occasion->longitude = $request->longitude;
             $occasion->from_date = Carbon::parse("$request->endTime $request->endDate");
             $occasion->to_date = Carbon::parse("$request->endTime $request->endDate");
             $occasion->user_id = auth()->user()->id;
             $occasion->save();
 
+//            TODO: change to return view
             return response(['success' => true, 'message' => 'Occasion created!']);
         } catch (\Exception $exception) {
             //  todo: return response
@@ -66,7 +64,7 @@ class OccasionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function show(Occasion $occasion)
@@ -77,7 +75,7 @@ class OccasionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function edit(Occasion $occasion)
@@ -89,7 +87,7 @@ class OccasionController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function update(Request $request, Occasion $occasion)
@@ -100,7 +98,7 @@ class OccasionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Occasion $occasion
+     * @param \HomeSecretary\Occasion $occasion
      * @return Response
      */
     public function destroy(Occasion $occasion)

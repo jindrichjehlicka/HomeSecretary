@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @foreach($occasions as $occasion)
-                    <h1>{{$occasion->name}}</h1>
+                @foreach($tasks as $task)
+                    <h1>{{$task->name}}</h1>
 
                 @endforeach
             </div>

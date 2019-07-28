@@ -13,6 +13,7 @@
                         <input type="text" class="form-control" id="occasionDescription" placeholder="Description"
                                v-model="description">
                     </div>
+
                     <div class="form-group">
                         <label for="occasionStartDate">Start Date</label>
                         <input type="date" class="form-control" id="occasionStartDate" placeholder="Starts.."
@@ -30,12 +31,16 @@
                     </div>
                     <div class="form-group ">
                         <label for="occasionEndTime">End Time</label>
-                        <input type="time" class="form-control" id="occasionEndTime" placeholder="" v-model="endTime">
+                        <input type="time" class="form-control" id="occasionEndTime" placeholder=""
+                               v-model="endTime">
                     </div>
 
-                    <!--                    TODO: add location-->
+                    <div class="form-group">
+                        <location class="location" v-on:setLatLong="setLatLong"></location>
+                    </div>
 
-                    <div @click="createOccasion" class="btn btn-primary">Create Occasion</div>
+                    <div @click="createEvent" class="btn btn-primary">Create Occasion</div>
+
                 </form>
             </div>
         </div>
@@ -44,42 +49,66 @@
 
 <script>
     import axios from 'axios';
+    import location from '../maps/Location';
 
     export default {
-
+        components: {
+            location
+        },
+        props: {
+            type: {
+                type: String,
+                required: false,
+                default: 'occasion'
+            }
+        },
         data() {
             return {
                 //TODO: delete after testing
-                name: 'An Event',
-                description: 'A very nice event',
+                name: 'An Occasion',
+                description: 'A very nice occasion',
                 startDate: '2019-08-17',
                 startTime: '16:00',
                 endDate: '2019-08-20',
-                endTime: '08:00'
+                endTime: '08:00',
+                latitude: '',
+                longitude: '',
+
             }
         },
         methods: {
-            createOccasion() {
-                axios.post('/occasions/store', {
+            createEvent() {
+                const params = {
                     name: this.name,
                     description: this.description,
+                    latitude: this.latitude,
+                    longitude: this.longitude,
                     startDate: this.startDate,
                     startTime: this.startTime,
                     endDate: this.endDate,
                     endTime: this.endTime,
-                })
+                };
+                console.log(`/occasions/store`);
+                axios.post(`/occasions/store`, params)
                     .then(function (response) {
+                        //add alert
                         console.log(response);
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            setLatLong(latLong) {
+                this.longitude = latLong.long;
+                this.latitude = latLong.lat;
             }
         },
 
 
-        mounted() {
-
-        }
     }
 </script>
+<style scoped>
+    .location {
+        margin: 24px 0 24px 0;
+    }
+</style>

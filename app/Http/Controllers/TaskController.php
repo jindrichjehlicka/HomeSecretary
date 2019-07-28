@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace HomeSecretary\Http\Controllers;
 
-use App\Task;
+use Carbon\Carbon;
+use HomeSecretary\Task;
+use HomeSecretary\TaskList;
 use Illuminate\Http\Request;
+use HomeSecretary\Http\Requests\StoreTask;
 
 class TaskController extends Controller
 {
@@ -14,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return view('tasks.index');
     }
 
     /**
@@ -24,24 +27,47 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTask $request)
     {
-        //
+
+        try {
+            $task = new Task();
+            $task->name = $request->name;
+            $task->description = $request->description;
+            $task->latitude = $request->latitude;
+            $task->longitude = $request->longitude;
+            $task->deadline = Carbon::parse("$request->deadlineTime $request->deadlineDate");
+            $task->user_id = auth()->user()->id;
+            $task->save();
+
+            foreach ($request->tasksList as $taskName) {
+                $taskList = new TaskList();
+                $taskList->name = $taskName;
+                $taskList->task_id = $task->id;
+                $taskList->save();
+            }
+
+//            TODO: change to return view
+            return response(['success' => true, 'message' => 'Occasion created!']);
+        } catch (\Exception $exception) {
+            //  todo: return response
+            dump($exception);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param \HomeSecretary\Task $task
      * @return \Illuminate\Http\Response
      */
     public function show(Task $task)
@@ -52,7 +78,7 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param \HomeSecretary\Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit(Task $task)
@@ -63,8 +89,8 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
+     * @param \Illuminate\Http\Request $request
+     * @param \HomeSecretary\Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Task $task)
@@ -75,7 +101,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param \HomeSecretary\Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy(Task $task)

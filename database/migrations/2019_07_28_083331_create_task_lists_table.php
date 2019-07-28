@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableLocations extends Migration
+class CreateTaskListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateTableLocations extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->string('longitude');
-            $table->string('latitude');
-            $table->string('address');
-            $table->string('zip');
-            $table->string('country');
-
+        Schema::create('task_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->boolean('completed')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('task_id');
+
             $table->timestamps();
         });
+
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateTableLocations extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_locations');
+        Schema::dropIfExists('task_lists');
     }
 }

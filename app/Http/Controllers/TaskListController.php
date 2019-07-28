@@ -2,10 +2,10 @@
 
 namespace HomeSecretary\Http\Controllers;
 
-use HomeSecretary\Location;
+use HomeSecretary\TaskList;
 use Illuminate\Http\Request;
 
-class LocationController extends Controller
+class TaskListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \HomeSecretary\Location  $location
+     * @param  \HomeSecretary\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function show(Location $location)
+    public function show(TaskList $taskList)
     {
         //
     }
@@ -52,10 +52,10 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \HomeSecretary\Location  $location
+     * @param  \HomeSecretary\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function edit(Location $location)
+    public function edit(TaskList $taskList)
     {
         //
     }
@@ -64,10 +64,10 @@ class LocationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \HomeSecretary\Location  $location
+     * @param  \HomeSecretary\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $location)
+    public function update(Request $request, TaskList $taskList)
     {
         //
     }
@@ -75,10 +75,10 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \HomeSecretary\Location  $location
+     * @param  \HomeSecretary\TaskList  $taskList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Location $location)
+    public function destroy(TaskList $taskList)
     {
         //
     }
