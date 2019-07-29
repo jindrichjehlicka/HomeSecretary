@@ -15,10 +15,14 @@ class GroupController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
+//        where('user_id', $userId)
+        $groups = Group::with('users')->whereHas('users')->get();
 
-//        $groups = Group::where('user_id', $userId)->get();
+        $admins = $groups->mapWithKeys(function ($item) {
+            return [$item->id => $item->users->where('id', $item->user_id)->first()];
+        });
 
-//        return view('occasions.index')->with();
+        return view('groups.index')->with(['groups' => $groups, 'admins' => $admins]);
     }
 
     /**
@@ -34,7 +38,7 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,8 +51,8 @@ class GroupController extends Controller
             $group->user_id = $userId;
             $group->save();
             $group->users()->attach($userId);
-            
-            foreach($request->userIds as $userId){
+
+            foreach ($request->userIds as $userId) {
                 $group->users()->attach($userId);
             }
 
@@ -63,7 +67,7 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \HomeSecretary\Group  $group
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
     public function show(Group $group)
@@ -74,7 +78,7 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \HomeSecretary\Group  $group
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
     public function edit(Group $group)
@@ -85,8 +89,8 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \HomeSecretary\Group  $group
+     * @param \Illuminate\Http\Request $request
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Group $group)
@@ -97,7 +101,7 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \HomeSecretary\Group  $group
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
     public function destroy(Group $group)

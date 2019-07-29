@@ -46,7 +46,7 @@
                         <location class="location" v-on:setLatLong="setLatLong"></location>
                     </div>
 
-                    <div @click="createEvent" class="btn btn-primary">Create Occasion</div>
+                    <div @click="createEvent" class="btn btn-primary">Create Task</div>
 
                 </form>
             </div>

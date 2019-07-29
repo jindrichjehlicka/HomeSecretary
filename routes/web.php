@@ -20,6 +20,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/occasions', 'OccasionController@index')->name('occasions.index')->middleware('auth');
 Route::get('/occasions/create', 'OccasionController@create')->name('occasions.create')->middleware('auth');
 Route::post('/occasions/store', 'OccasionController@store')->name('occasions.store')->middleware('auth');
+Route::get('/occasions/{occasion}', 'OccasionController@show')->name('occasions.show')->middleware('auth');
 
 //tasks
 Route::get('/tasks', 'TaskController@index')->name('tasks.index')->middleware('auth');

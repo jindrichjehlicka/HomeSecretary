@@ -59,6 +59,11 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
+                            <a class="nav-link" href="{{ route('groups.index') }}">
+                                My Groups
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link" href="{{ route('tasks.index') }}">
                                 Tasks
                             </a>

@@ -38936,7 +38936,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "btn btn-primary", on: { click: _vm.createEvent } },
-            [_vm._v("Create Occasion")]
+            [_vm._v("Create Task")]
           )
         ])
       ])
