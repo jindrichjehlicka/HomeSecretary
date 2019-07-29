@@ -7,7 +7,7 @@
                    @change="geocode()">
         </div>
         <!--TODO: add different inputs for occasions and tasks-->
-        <div style="width:100%;height: 180px" id="mapContainer" ></div>
+        <div style="width:100%;height: 260px" id="mapContainer" ></div>
     </div>
 
 </template>

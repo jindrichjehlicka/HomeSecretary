@@ -2,13 +2,10 @@
 
 namespace HomeSecretary\Http\Controllers;
 
-use Carbon\Carbon;
-use HomeSecretary\Task;
-use HomeSecretary\TaskList;
+use HomeSecretary\Group;
 use Illuminate\Http\Request;
-use HomeSecretary\Http\Requests\StoreTask;
 
-class TaskController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +15,14 @@ class TaskController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
+//        where('user_id', $userId)
+        $groups = Group::with('users')->whereHas('users')->get();
 
-        $tasks = Task::with('taskList')->where('user_id', $userId)->get();
+        $admins = $groups->mapWithKeys(function ($item) {
+            return [$item->id => $item->users->where('id', $item->user_id)->first()];
+        });
 
-        return view('tasks.index')->with(['tasks'=>$tasks]);
+        return view('groups.index')->with(['groups' => $groups, 'admins' => $admins]);
     }
 
     /**
@@ -31,7 +32,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        return view('groups.create');
     }
 
     /**
@@ -40,24 +41,19 @@ class TaskController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTask $request)
+    public function store(Request $request)
     {
-
         try {
-            $task = new Task();
-            $task->name = $request->name;
-            $task->description = $request->description;
-            $task->latitude = $request->latitude;
-            $task->longitude = $request->longitude;
-            $task->deadline = Carbon::parse("$request->deadlineTime $request->deadlineDate");
-            $task->user_id = auth()->user()->id;
-            $task->save();
+            $userId = auth()->user()->id;
+            $group = new Group();
+            $group->name = $request->name;
+            $group->description = $request->description;
+            $group->user_id = $userId;
+            $group->save();
+            $group->users()->attach($userId);
 
-            foreach ($request->tasksList as $taskName) {
-                $taskList = new TaskList();
-                $taskList->name = $taskName;
-                $taskList->task_id = $task->id;
-                $taskList->save();
+            foreach ($request->userIds as $userId) {
+                $group->users()->attach($userId);
             }
 
 //            TODO: change to return view
@@ -71,10 +67,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \HomeSecretary\Task $task
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show(Group $group)
     {
         //
     }
@@ -82,10 +78,10 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \HomeSecretary\Task $task
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Group $group)
     {
         //
     }
@@ -94,10 +90,10 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \HomeSecretary\Task $task
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Group $group)
     {
         //
     }
@@ -105,10 +101,10 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \HomeSecretary\Task $task
+     * @param \HomeSecretary\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Group $group)
     {
         //
     }

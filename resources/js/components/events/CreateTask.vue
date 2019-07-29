@@ -46,7 +46,7 @@
                         <location class="location" v-on:setLatLong="setLatLong"></location>
                     </div>
 
-                    <div @click="createEvent" class="btn btn-primary">Create Occasion</div>
+                    <div @click="createEvent" class="btn btn-primary">Create Task</div>
 
                 </form>
             </div>
@@ -104,13 +104,13 @@
             },
             initialState(){
                 return{
-                    name: 'Task',
-                    description: 'A very nice task',
+                    name: '',
+                    description: '',
                     latitude: '',
                     longitude: '',
-                    deadlineDate: '2019-08-20',
-                    deadlineTime: '08:00',
-                    tasksList: ['Clean house'],
+                    deadlineDate: '',
+                    deadlineTime: '',
+                    tasksList: [],
                     taskListName: ''
                 }
             },

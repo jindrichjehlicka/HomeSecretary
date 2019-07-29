@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <create-task></create-task>
+    <create-group></create-group>
 
 @endsection

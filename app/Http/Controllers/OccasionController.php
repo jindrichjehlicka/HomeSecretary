@@ -69,7 +69,7 @@ class OccasionController extends Controller
      */
     public function show(Occasion $occasion)
     {
-        //
+       dd('hello');
     }
 
     /**
