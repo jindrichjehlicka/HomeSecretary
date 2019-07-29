@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+
 //Occasions
 Route::get('/occasions', 'OccasionController@index')->name('occasions.index')->middleware('auth');
 Route::get('/occasions/create', 'OccasionController@create')->name('occasions.create')->middleware('auth');

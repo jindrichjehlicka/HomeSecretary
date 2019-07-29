@@ -2091,13 +2091,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     initialState: function initialState() {
       return {
-        name: 'Task',
-        description: 'A very nice task',
+        name: '',
+        description: '',
         latitude: '',
         longitude: '',
-        deadlineDate: '2019-08-20',
-        deadlineTime: '08:00',
-        tasksList: ['Clean house'],
+        deadlineDate: '',
+        deadlineTime: '',
+        tasksList: [],
         taskListName: ''
       };
     },
@@ -38734,7 +38734,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", {
-      staticStyle: { width: "100%", height: "180px" },
+      staticStyle: { width: "100%", height: "260px" },
       attrs: { id: "mapContainer" }
     })
   ])

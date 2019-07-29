@@ -104,13 +104,13 @@
             },
             initialState(){
                 return{
-                    name: 'Task',
-                    description: 'A very nice task',
+                    name: '',
+                    description: '',
                     latitude: '',
                     longitude: '',
-                    deadlineDate: '2019-08-20',
-                    deadlineTime: '08:00',
-                    tasksList: ['Clean house'],
+                    deadlineDate: '',
+                    deadlineTime: '',
+                    tasksList: [],
                     taskListName: ''
                 }
             },
