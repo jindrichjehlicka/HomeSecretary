@@ -3,7 +3,6 @@
 namespace HomeSecretary;
 
 use Illuminate\Database\Eloquent\Model;
-use HomeSecretary\TaskList;
 
 class Task extends Model
 {

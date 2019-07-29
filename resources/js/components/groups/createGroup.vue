@@ -8,11 +8,37 @@
                         <input type="text" class="form-control" id="groupName" placeholder="Name" v-model="name">
                     </div>
                     <div class="form-group">
-                        <label for="occasionDescription">Description</label>
-                        <input type="text" class="form-control" id="occasionDescription" placeholder="Description"
+                        <label for="groupDescription">Description</label>
+                        <input type="text" class="form-control" id="groupDescription" placeholder="Description"
                                v-model="description">
                     </div>
 
+                    <div class="form-group">
+                        <label for="taskList">Add user</label>
+                        <input type="text" class="form-control" id="taskList"
+                               v-model="userNameSearch">
+                    </div>
+                    <div class="dropdown">
+                        <!--                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--                            Dropdown button-->
+                        <!--                        </button>-->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="suggestions"
+                             :class="{block:suggestions.length>0}">
+                            <div class="dropdown-item" @click="addUserToGroup(user)" v-for="user in suggestions">
+                                {{user.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-list">
+                        <ul class="list-group">
+                            <li class="list-group-item flex" v-for="(user, key) in users">
+                                {{user.name}}
+                                <button type="button" class="btn btn-danger float-right btn-sm"
+                                        @click="removeUserFromGroup(key)">Delete
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                     <div @click="createGroup" class="btn btn-primary">Create Group</div>
 
                 </form>
@@ -23,13 +49,12 @@
 
 <script>
     import axios from 'axios';
-    import location from '../maps/Location';
+    import debounce from 'debounce';
 
     export default {
-        components: {
-            location
-        },
+        name: 'create-group',
         props: {
+
             type: {
                 type: String,
                 required: false,
@@ -39,31 +64,53 @@
         data() {
             return {
                 //TODO: delete after testing
-                name: 'An Occasion',
-                description: 'A very nice occasion',
-                startDate: '2019-08-17',
-                startTime: '16:00',
-                endDate: '2019-08-20',
-                endTime: '08:00',
-                latitude: '',
-                longitude: '',
+                name: 'New Group',
+                description: 'An amazing group',
+                users: [],
+                userNameSearch: '',
+                suggestions: []
+
 
             }
         },
+        watch: {
+            userNameSearch() {
+                this.searchUsers();
+            }
+        },
+        created() {
+            this.searchUsers = debounce(this.searchUsers, 300)
+        },
         methods: {
-            createEvent() {
+            addUserToGroup(user) {
+                this.users.push(user);
+                this.suggestions = []
+            },
+            searchUsers() {
+                if (this.userNameSearch) {
+                    let vm = this;
+                    axios.get(`/users/search`, {
+                        params: {
+                            search_string: this.userNameSearch,
+                        }
+                    })
+                        .then(function (response) {
+                            vm.suggestions = response.data;
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            },
+            createGroup() {
                 const params = {
                     name: this.name,
                     description: this.description,
-                    latitude: this.latitude,
-                    longitude: this.longitude,
-                    startDate: this.startDate,
-                    startTime: this.startTime,
-                    endDate: this.endDate,
-                    endTime: this.endTime,
+                    userIds: this.users.map(user => user.id)
                 };
-                console.log(`/occasions/store`);
-                axios.post(`/occasions/store`, params)
+
+                axios.post(`/groups/store`, params)
                     .then(function (response) {
                         //add alert
                         console.log(response);
@@ -72,9 +119,8 @@
                         console.log(error);
                     });
             },
-            setLatLong(latLong) {
-                this.longitude = latLong.long;
-                this.latitude = latLong.lat;
+            removeUserFromGroup(index) {
+                this.users.splice(index, 1);
             }
         },
 
@@ -84,5 +130,13 @@
 <style scoped>
     .location {
         margin: 24px 0 24px 0;
+    }
+
+    .block {
+        display: block
+    }
+
+    .user-list {
+        margin-bottom: 20px
     }
 </style>

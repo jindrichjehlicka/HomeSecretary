@@ -16,9 +16,9 @@ class GroupController extends Controller
     {
         $userId = auth()->user()->id;
 
-//        $occasions = Group::where('user_id', $userId)->get();
+//        $groups = Group::where('user_id', $userId)->get();
 
-        return view('occasions.index')->with();
+//        return view('occasions.index')->with();
     }
 
     /**
@@ -39,7 +39,25 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $userId = auth()->user()->id;
+            $group = new Group();
+            $group->name = $request->name;
+            $group->description = $request->description;
+            $group->user_id = $userId;
+            $group->save();
+            $group->users()->attach($userId);
+            
+            foreach($request->userIds as $userId){
+                $group->users()->attach($userId);
+            }
+
+//            TODO: change to return view
+            return response(['success' => true, 'message' => 'Occasion created!']);
+        } catch (\Exception $exception) {
+            //  todo: return response
+            dump($exception);
+        }
     }
 
     /**
