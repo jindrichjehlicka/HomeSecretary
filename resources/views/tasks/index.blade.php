@@ -13,7 +13,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">deadline: {{$task->deadline}}</h6>
                             <p class="card-text">{{$task->description}}</p>
 
-                            <a href="#" class="card-link">Show Task</a>
+                            <a href="{{ route('tasks.show',$task) }} " class="card-link">Show Task</a>
 
                         </div>
                     </div>

@@ -11,7 +11,7 @@
                             <h5 class="card-title">{{$group->name}}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Group admin: {{$admins[$group->id]->name}}</h6>
                             <p class="card-text">{{$group->description}}</p>
-                            <a href="#" class="card-link">View group</a>
+                            <a href="{{ route('groups.show',$group) }}" class="card-link">View group</a>
 
                         </div>
                     </div>
