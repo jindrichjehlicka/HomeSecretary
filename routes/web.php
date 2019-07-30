@@ -21,6 +21,9 @@ Route::get('/occasions', 'OccasionController@index')->name('occasions.index')->m
 Route::get('/occasions/create', 'OccasionController@create')->name('occasions.create')->middleware('auth');
 Route::post('/occasions/store', 'OccasionController@store')->name('occasions.store')->middleware('auth');
 Route::get('/occasions/{occasion}', 'OccasionController@show')->name('occasions.show')->middleware('auth');
+Route::get('/occasions/edit/{occasion}', 'OccasionController@edit')->name('occasions.edit')->middleware('auth');
+Route::put('/occasions/update/{occasion}', 'OccasionController@update')->name('occasions.update')->middleware('auth');
+Route::get('/occasions/destroy/{occasion}', 'OccasionController@destroy')->name('occasions.destroy')->middleware('auth');
 
 //tasks
 Route::get('/tasks', 'TaskController@index')->name('tasks.index')->middleware('auth');

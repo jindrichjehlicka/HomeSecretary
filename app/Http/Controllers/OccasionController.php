@@ -69,7 +69,7 @@ class OccasionController extends Controller
      */
     public function show(Occasion $occasion)
     {
-       dd('hello');
+        return view('occasions.show')->with(['occasion' => $occasion]);
     }
 
     /**
@@ -80,7 +80,7 @@ class OccasionController extends Controller
      */
     public function edit(Occasion $occasion)
     {
-        //
+        return view('occasions.edit')->with(['occasion' => $occasion]);
     }
 
     /**
@@ -92,7 +92,22 @@ class OccasionController extends Controller
      */
     public function update(Request $request, Occasion $occasion)
     {
-        //
+        try {
+            $occasion->name = $request->name;
+            $occasion->description = $request->description;
+            $occasion->latitude = $request->latitude;
+            $occasion->longitude = $request->longitude;
+            $occasion->from_date = Carbon::parse("$request->endTime $request->endDate");
+            $occasion->to_date = Carbon::parse("$request->endTime $request->endDate");
+            $occasion->user_id = auth()->user()->id;
+            $occasion->save();
+
+//            TODO: change to return view
+            return response(['success' => true, 'message' => 'Occasion created!']);
+        } catch (\Exception $exception) {
+            //  todo: return response
+            dump($exception);
+        }
     }
 
     /**
@@ -103,6 +118,9 @@ class OccasionController extends Controller
      */
     public function destroy(Occasion $occasion)
     {
-        //
+        $occasion->delete();
+
+       return redirect('/occasions');
+
     }
 }

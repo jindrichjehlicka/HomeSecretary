@@ -37,6 +37,16 @@
                 searchText: ''
             }
         },
+        props:{
+            lat:{
+                required:false,
+                default:52.5
+            },
+            long:{
+                required:false,
+                default: 13
+            }
+        },
         methods: {
             initializeMap() {
                 const defaultLayers = this.platform.createDefaultLayers();
@@ -72,6 +82,7 @@
                 let locations = result.response.view[0].result;
                 this.latitude = locations[0].location.displayPosition.latitude;
                 this.longitude = locations[0].location.displayPosition.longitude;
+                console.log('emiting');
                 this.$emit('setLatLong',{
                     long:this.longitude,
                     lat:this.latitude
@@ -100,7 +111,9 @@
             }
         },
 
-        mounted() {
+        async mounted() {
+            this.longitude = await this.long;
+            this.latitude = await this.lat;
             this.initializeMap()
         }
     }
