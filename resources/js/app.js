@@ -24,6 +24,7 @@ Vue.component('create-occasion', require('./components/events/CreateOccasion.vue
 Vue.component('edit-occasion', require('./components/events/EditOccasion.vue').default);
 Vue.component('create-task', require('./components/events/CreateTask.vue').default);
 Vue.component('create-group', require('./components/groups/CreateGroup.vue').default);
+Vue.component('edit-group', require('./components/groups/EditGroup.vue').default);
 Vue.component('show-location', require('./components/maps/ShowLocation.vue').default);
 
 /**

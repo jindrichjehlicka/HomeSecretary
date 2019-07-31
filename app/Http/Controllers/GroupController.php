@@ -72,7 +72,9 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        $members = $group->users()->get();
+
+        return view('groups.show')->with(['group' => $group,'members'=>$members]);
     }
 
     /**

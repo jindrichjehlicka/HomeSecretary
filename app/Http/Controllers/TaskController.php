@@ -21,6 +21,7 @@ class TaskController extends Controller
 
         $tasks = Task::with('taskList')->where('user_id', $userId)->get();
 
+
         return view('tasks.index')->with(['tasks'=>$tasks]);
     }
 
@@ -76,7 +77,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show')->with(['task'=>$task]);
     }
 
     /**

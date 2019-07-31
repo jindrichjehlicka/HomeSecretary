@@ -52753,6 +52753,7 @@ Vue.component('create-occasion', __webpack_require__(/*! ./components/events/Cre
 Vue.component('edit-occasion', __webpack_require__(/*! ./components/events/EditOccasion.vue */ "./resources/js/components/events/EditOccasion.vue")["default"]);
 Vue.component('create-task', __webpack_require__(/*! ./components/events/CreateTask.vue */ "./resources/js/components/events/CreateTask.vue")["default"]);
 Vue.component('create-group', __webpack_require__(/*! ./components/groups/CreateGroup.vue */ "./resources/js/components/groups/CreateGroup.vue")["default"]);
+Vue.component('edit-group', __webpack_require__(/*! ./components/groups/EditGroup.vue */ "./resources/js/components/groups/EditGroup.vue")["default"]);
 Vue.component('show-location', __webpack_require__(/*! ./components/maps/ShowLocation.vue */ "./resources/js/components/maps/ShowLocation.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53238,6 +53239,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateGroup_vue_vue_type_template_id_448cdc93_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/groups/EditGroup.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/groups/EditGroup.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/groups/EditGroup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 

@@ -10,9 +10,13 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">{{$task->name}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">deadline: {{$task->deadline}}</h6>
                             <p class="card-text">{{$task->description}}</p>
+                            <h6 class="card-subtitle mb-4 mt-2 text-muted">deadline: {{$task->deadline}}</h6>
 
+                            <h6 class="card-subtitle mb-1 text-muted">Progress</h6>
+                            <div class="progress mb-3">
+                                <div class="progress-bar" role="progressbar" style="width: {{$task->progress}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$task->progress}}%</div>
+                            </div>
                             <a href="{{ route('tasks.show',$task) }} " class="card-link">Show Task</a>
 
                         </div>
