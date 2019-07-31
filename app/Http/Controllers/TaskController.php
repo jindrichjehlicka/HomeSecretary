@@ -43,7 +43,6 @@ class TaskController extends Controller
      */
     public function store(StoreTask $request)
     {
-
         try {
             $task = new Task();
             $task->name = $request->name;
@@ -58,6 +57,7 @@ class TaskController extends Controller
                 $taskList = new TaskList();
                 $taskList->name = $taskName;
                 $taskList->task_id = $task->id;
+                $taskList->user_id = $request->assigned_to;
                 $taskList->save();
             }
 

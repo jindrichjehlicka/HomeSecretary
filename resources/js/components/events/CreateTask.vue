@@ -36,12 +36,37 @@
                         <ul class="list-group">
                             <li class="list-group-item flex" v-for="(task, key) in tasksList">
                                 {{task}}
-                                <button type="button" class="btn btn-danger float-right btn-sm" @click="removeFromList(key)">Delete</button>
+                                <button type="button" class="btn btn-danger float-right btn-sm"
+                                        @click="removeFromList(key)">Delete
+                                </button>
                             </li>
                         </ul>
                     </div>
 
+                    <div class="form-group mt-2">
+                        <label for="assignedUser">Assign User</label>
+                        <input type="text" class="form-control" id="assignedUser"
+                               v-model="userNameSearch">
+                    </div>
+                    <div class="dropdown">
 
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="suggestions"
+                             :class="{block:suggestions.length>0}">
+                            <div class="dropdown-item" @click="assignToUser(user)" v-for="user in suggestions">
+                                {{user.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-list">
+                        <ul class="list-group">
+                            <li class="list-group-item flex" v-if="user">
+                                {{user.name}}
+                                <button type="button" class="btn btn-danger float-right btn-sm"
+                                        @click="removeUser()">Delete
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="form-group">
                         <location class="location" v-on:setLatLong="setLatLong"></location>
                     </div>
@@ -57,6 +82,7 @@
 <script>
     import axios from 'axios';
     import location from '../maps/Location';
+    import debounce from 'debounce';
 
     export default {
         components: {
@@ -65,7 +91,39 @@
         data() {
             return this.initialState()
         },
+        watch: {
+            userNameSearch() {
+                this.searchUsers();
+            }
+        },
+        created() {
+            this.searchUsers = debounce(this.searchUsers, 300)
+        },
         methods: {
+            assignToUser(user) {
+                this.user = user;
+                this.suggestions = []
+            },
+            searchUsers() {
+                if (this.userNameSearch) {
+                    let vm = this;
+                    axios.get(`/users/search`, {
+                        params: {
+                            search_string: this.userNameSearch,
+                        }
+                    })
+                        .then(function (response) {
+                            vm.suggestions = response.data;
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            },
+            removeUser() {
+                this.user = null;
+            },
             createEvent() {
                 const params = {
                     name: this.name,
@@ -78,7 +136,8 @@
                     endTime: this.endTime,
                     deadlineDate: this.deadlineDate,
                     deadlineTime: this.deadlineTime,
-                    tasksList:this.tasksList
+                    tasksList: this.tasksList,
+                    assigned_to:this.user.id
                 };
 
                 const vm = this;
@@ -99,11 +158,11 @@
                 this.tasksList.push(this.taskListName);
                 this.taskListName = '';
             },
-            removeFromList(index){
+            removeFromList(index) {
                 this.tasksList.splice(index, 1);
             },
-            initialState(){
-                return{
+            initialState() {
+                return {
                     name: '',
                     description: '',
                     latitude: '',
@@ -111,12 +170,14 @@
                     deadlineDate: '',
                     deadlineTime: '',
                     tasksList: [],
-                    taskListName: ''
+                    taskListName: '',
+                    user: null,
+                    userNameSearch: '',
+                    suggestions: []
                 }
             },
-            resetWindow (){
-                console.log(this.$data);
-                Object.assign(this.$data, this.initialState());
+            resetWindow() {
+                // Object.assign(this.$data, this.initialState());
             }
         },
 
@@ -135,12 +196,17 @@
     .width-48 {
         width: 48%;
     }
-    li{
+
+    li {
         justify-content: space-between;
         align-items: center;
     }
 
-    .space-between{
+    .block {
+        display: block
+    }
+
+    .space-between {
         justify-content: space-between;
     }
 </style>

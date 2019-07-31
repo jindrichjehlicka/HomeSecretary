@@ -2002,6 +2002,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _maps_Location__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../maps/Location */ "./resources/js/components/maps/Location.vue");
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! debounce */ "./node_modules/debounce/index.js");
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(debounce__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2058,6 +2060,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2067,7 +2095,37 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return this.initialState();
   },
+  watch: {
+    userNameSearch: function userNameSearch() {
+      this.searchUsers();
+    }
+  },
+  created: function created() {
+    this.searchUsers = debounce__WEBPACK_IMPORTED_MODULE_2___default()(this.searchUsers, 300);
+  },
   methods: {
+    assignToUser: function assignToUser(user) {
+      this.user = user;
+      this.suggestions = [];
+    },
+    searchUsers: function searchUsers() {
+      if (this.userNameSearch) {
+        var vm = this;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/users/search", {
+          params: {
+            search_string: this.userNameSearch
+          }
+        }).then(function (response) {
+          vm.suggestions = response.data;
+          console.log(response);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    removeUser: function removeUser() {
+      this.user = null;
+    },
     createEvent: function createEvent() {
       var params = {
         name: this.name,
@@ -2080,7 +2138,8 @@ __webpack_require__.r(__webpack_exports__);
         endTime: this.endTime,
         deadlineDate: this.deadlineDate,
         deadlineTime: this.deadlineTime,
-        tasksList: this.tasksList
+        tasksList: this.tasksList,
+        assigned_to: this.user.id
       };
       var vm = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/tasks/store", params).then(function (response) {
@@ -2110,12 +2169,13 @@ __webpack_require__.r(__webpack_exports__);
         deadlineDate: '',
         deadlineTime: '',
         tasksList: [],
-        taskListName: ''
+        taskListName: '',
+        user: null,
+        userNameSearch: '',
+        suggestions: []
       };
     },
-    resetWindow: function resetWindow() {
-      console.log(this.$data);
-      Object.assign(this.$data, this.initialState());
+    resetWindow: function resetWindow() {// Object.assign(this.$data, this.initialState());
     }
   }
 });
@@ -7168,7 +7228,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.location[data-v-1216a93c] {\n    margin: 24px 0 24px 0;\n}\n.flex[data-v-1216a93c] {\n    display: flex;\n}\n.width-48[data-v-1216a93c] {\n    width: 48%;\n}\nli[data-v-1216a93c]{\n    justify-content: space-between;\n    align-items: center;\n}\n.space-between[data-v-1216a93c]{\n    justify-content: space-between;\n}\n", ""]);
+exports.push([module.i, "\n.location[data-v-1216a93c] {\n    margin: 24px 0 24px 0;\n}\n.flex[data-v-1216a93c] {\n    display: flex;\n}\n.width-48[data-v-1216a93c] {\n    width: 48%;\n}\nli[data-v-1216a93c] {\n    justify-content: space-between;\n    align-items: center;\n}\n.block[data-v-1216a93c] {\n    display: block\n}\n.space-between[data-v-1216a93c] {\n    justify-content: space-between;\n}\n", ""]);
 
 // exports
 
@@ -40042,12 +40102,102 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Delete")]
+                    [_vm._v("Delete\n                            ")]
                   )
                 ])
               }),
               0
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group mt-2" }, [
+            _c("label", { attrs: { for: "assignedUser" } }, [
+              _vm._v("Assign User")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.userNameSearch,
+                  expression: "userNameSearch"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "assignedUser" },
+              domProps: { value: _vm.userNameSearch },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.userNameSearch = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "dropdown" }, [
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                class: { block: _vm.suggestions.length > 0 },
+                attrs: {
+                  "aria-labelledby": "dropdownMenuButton",
+                  id: "suggestions"
+                }
+              },
+              _vm._l(_vm.suggestions, function(user) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-item",
+                    on: {
+                      click: function($event) {
+                        return _vm.assignToUser(user)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(user.name) +
+                        "\n                        "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "user-list" }, [
+            _c("ul", { staticClass: "list-group" }, [
+              _vm.user
+                ? _c("li", { staticClass: "list-group-item flex" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.user.name) +
+                        "\n                            "
+                    ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger float-right btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.removeUser()
+                          }
+                        }
+                      },
+                      [_vm._v("Delete\n                            ")]
+                    )
+                  ])
+                : _vm._e()
+            ])
           ]),
           _vm._v(" "),
           _c(
