@@ -19,10 +19,19 @@ class TaskController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $tasks = Task::with('taskList')->where('user_id', $userId)->get();
+        $tasks = Task::with('taskList')
+            ->where('user_id', $userId)
+            ->limit(6)
+            ->get();
 
+        $assignedTasks = Task::with('taskList')
+            ->where('user_id', '!=', $userId)
+            ->whereHas('taskList', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })
+            ->limit(6)->get();
 
-        return view('tasks.index')->with(['tasks'=>$tasks]);
+        return view('tasks.index')->with(['tasks' => $tasks, 'assignedTasks' => $assignedTasks]);
     }
 
     /**
@@ -77,7 +86,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks.show')->with(['task'=>$task]);
+        return view('tasks.show')->with(['task' => $task]);
     }
 
     /**
