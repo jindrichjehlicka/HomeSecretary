@@ -1,25 +1,23 @@
 <template>
-    <div>
-        <h6 class="card-subtitle mt-5 mb-1 text-muted">Task list</h6>
-        <ul class="list-group mt-3">
-            <li class="list-group-item" v-for="(list, index) in task.task_list">
-                {{list.name}}
-                <button v-if="!list.completed" type="button" @click="completeTask(list,index)"
-                        class="btn btn-primary float-right btn-sm">
-                    Complete
-                </button>
-                <button v-else type="button"
-                        class="btn btn-grey float-right btn-sm disabled">
-                    Completed
-                </button>
+  <div>
+    <h6 class="card-subtitle mt-5 mb-1 text-muted">Task list</h6>
+    <ul class="list-group mt-3">
+      <li class="list-group-item" v-for="(list, index) in task.task_list">
+        {{list.name}}
+        <button v-if="!list.completed" type="button" @click="completeTask(list,index)"
+                class="btn btn-primary float-right btn-sm">
+          Complete
+        </button>
+        <button v-else type="button"
+                class="btn btn-grey float-right btn-sm disabled">
+          Completed by {{user.name}}
+        </button>
 
-            </li>
-        </ul>
-    </div>
+      </li>
+    </ul>
+  </div>
 </template>
-
 <script>
-
     export default {
         data() {
             return {}
@@ -28,6 +26,10 @@
             task: {
                 required: true,
                 type: Object
+            },
+            user:{
+                required:true,
+                type:Object
             }
         },
         methods: {
@@ -47,8 +49,5 @@
                     });
             }
         },
-        mounted() {
-            console.log(this.task)
-        }
     }
 </script>

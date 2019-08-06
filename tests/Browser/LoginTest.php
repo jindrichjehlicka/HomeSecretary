@@ -2,22 +2,24 @@
 
 namespace Tests\Browser;
 
+use http\Client\Curl\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class LoginTest extends DuskTestCase
+class SendEmailTest extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function testEmailSending()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertSee('Laravel');
-        });
+
+        $ocassion = Ocassion::first();
+        $mock = Mockery::mock('Swift_Mailer');
+        $this->app['mailer']->setSwiftMailer($mock);
+        $mock->shouldReceive('send')->once()
+            ->andReturnUsing(function($msg) {
+                $this->assertEquals('Occasion reminder', $msg->getSubject());
+                $this->assertEquals('jindrichjehlicka@example.com', $msg->getTo());
+                $this->assertContains('Occasion place', $msg->getBody());
+            });
     }
 }

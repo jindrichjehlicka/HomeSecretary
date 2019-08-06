@@ -10,7 +10,7 @@
                 <p class="mb3">{{$task->description}}</p>
                 <h6 class="card-subtitle mb-2 text-muted">Deadline: {{$task->deadline}}</h6>
                 <show-location :latitude="{{$task->latitude}}" :longitude="{{$task->longitude}}"></show-location>
-                <complete-task-list :task="{{$task}}"></complete-task-list>
+                <complete-task-list :task="{{$task}}" :user="{{auth()->user()}}"></complete-task-list>
             </div>
         </div>
     </div>

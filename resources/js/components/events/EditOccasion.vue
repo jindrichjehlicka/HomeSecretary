@@ -51,6 +51,7 @@
 <script>
     import axios from 'axios';
     import location from '../maps/Location';
+    import debounce from 'debounce';
 
     export default {
         components: {
@@ -62,15 +63,22 @@
                 required: true
             }
         },
+        watch: {
+            userNameSearch() {
+                this.searchUsers();
+            }
+        },
+        created() {
+            this.searchUsers = debounce(this.searchUsers, 300)
+        },
         data() {
             return {
-                //TODO: delete after testing
-                name: 'An Occasion',
-                description: 'A very nice occasion',
-                startDate: '2019-08-17',
-                startTime: '16:00',
-                endDate: '2019-08-20',
-                endTime: '08:00',
+                name: '',
+                description: '',
+                startDate: '',
+                startTime: '',
+                endDate: '',
+                endTime: '',
                 latitude: '',
                 longitude: '',
 
@@ -97,11 +105,33 @@
                         console.log(error);
                     });
             },
-
+            assignToUser(user) {
+                this.user = user;
+                this.suggestions = []
+            },
+            searchUsers() {
+                if (this.userNameSearch) {
+                    let vm = this;
+                    axios.get(`/users/search`, {
+                        params: {
+                            search_string: this.userNameSearch,
+                        }
+                    })
+                        .then(function (response) {
+                            vm.suggestions = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            },
             setLatLong(latLong) {
                 this.longitude = latLong.long;
                 this.latitude = latLong.lat;
-            }
+            },
+            removeUser() {
+                this.user = null;
+            },
         },
         mounted() {
             this.name = this.occasion.name;

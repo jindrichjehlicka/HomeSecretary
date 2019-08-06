@@ -47,8 +47,15 @@ Route::get('/groups/destroy/{group}', 'GroupController@destroy')->name('groups.d
 //user
 Route::get('/users/search', 'UserController@search')->name('users.search')->middleware('auth');
 
+//notifications
+Route::get('/notifications', 'NotificationController@index')->name('notifications.index')->middleware('auth');
+Route::post('/notifications/store', 'NotificationController@store')->name('notifications.store')->middleware('auth');
+
+//API
 //calendar
 Route::get('api/calendar/events', 'CalendarController@index')->name('calendars.events')->middleware('auth');
+
+
 
 
 

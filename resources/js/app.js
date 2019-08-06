@@ -22,12 +22,14 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('create-occasion', require('./components/events/CreateOccasion.vue').default);
 Vue.component('edit-occasion', require('./components/events/EditOccasion.vue').default);
+Vue.component('edit-task', require('./components/events/EditTask').default);
 Vue.component('create-task', require('./components/events/CreateTask.vue').default);
 Vue.component('create-group', require('./components/groups/CreateGroup.vue').default);
 Vue.component('edit-group', require('./components/groups/EditGroup.vue').default);
 Vue.component('show-location', require('./components/maps/ShowLocation.vue').default);
 Vue.component('calendar', require('./components/calendar.vue').default);
 Vue.component('complete-task-list', require('./components/events/CompleteTaskList').default);
+Vue.component('notification', require('./components/notifications/notification').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

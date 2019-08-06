@@ -69,6 +69,7 @@ class OccasionController extends Controller
      */
     public function show(Occasion $occasion)
     {
+//        $user
         return view('occasions.show')->with(['occasion' => $occasion]);
     }
 

@@ -1,29 +1,25 @@
 <template>
-
     <div>
         <div class="form-group ">
             <label for="mapLocation">Location - Street name and city</label>
-            <input type="text" class="form-control" id="mapLocation" placeholder="" v-model="searchText"
+            <input type="text" class="form-control" id="mapLocation"
+                   placeholder=""
+                   v-model="searchText"
                    @change="geocode()">
         </div>
-        <!--TODO: add different inputs for occasions and tasks-->
         <div style="width:100%;height: 260px" id="mapContainer" ></div>
     </div>
 
 </template>
-
 <script>
-
-
     export default {
-
         data() {
             return {
                 latitude: 52.5,
                 longitude: 13,
                 locationName: '',
                 map: {},
-                //TODO put into env\`
+                //TODO: Must be put into env. file
                 platform: new H.service.Platform({
                     'apikey': '9ikH2Uo_Ngu304J96SFsi9KKRe9mL628WHqmAR2I0JA'
                 }),

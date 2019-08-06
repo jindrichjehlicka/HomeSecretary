@@ -40,12 +40,14 @@
                 let tasks = events.tasks.map(task => ({
                     title: task.name,
                     backgroundColor: 'red',
+                    textColor: 'white',
                     date: task.deadline
                 }));
 
                 let occasions = events.occasions.map(occasion => ({
                     title: occasion.name,
-                    backgroundColor: 'red',
+                    backgroundColor: 'blue',
+                    textColor: 'white',
                     start: occasion.from_date,
                     end: occasion.to_date,
                 }));
