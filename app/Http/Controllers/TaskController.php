@@ -70,7 +70,6 @@ class TaskController extends Controller
                 $taskList->save();
             }
 
-//            TODO: change to return view
             return response(['success' => true, 'message' => 'Occasion created!']);
         } catch (\Exception $exception) {
             //  todo: return response
@@ -86,6 +85,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $task = $task->where('id', $task->id)->with('taskList')->first();
         return view('tasks.show')->with(['task' => $task]);
     }
 
@@ -121,5 +121,16 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function completeTaskFromTasklist(Request $request)
+    {
+
+        $taskListId = $request->params['task_list_id'];
+        $taskList = TaskList::where('id', $taskListId)->first();
+        $taskList->completed = 1;
+        $taskList->save();
+
+        return response(['success' => true, 'message' => 'Completed']);
     }
 }

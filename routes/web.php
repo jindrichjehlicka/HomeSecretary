@@ -33,6 +33,7 @@ Route::get('/tasks/{task}', 'TaskController@show')->name('tasks.show')->middlewa
 Route::get('/tasks/edit/{task}', 'TaskController@edit')->name('tasks.edit')->middleware('auth');
 Route::put('/tasks/update/{task}', 'TaskController@update')->name('tasks.update')->middleware('auth');
 Route::get('/tasks/destroy/{task}', 'TaskController@destroy')->name('tasks.destroy')->middleware('auth');
+Route::patch('/tasks/update-list/{task}', 'TaskController@completeTaskFromTasklist')->name('tasks.complete')->middleware('auth');
 
 //groups
 Route::get('/groups', 'GroupController@index')->name('groups.index')->middleware('auth');
@@ -45,6 +46,10 @@ Route::get('/groups/destroy/{group}', 'GroupController@destroy')->name('groups.d
 
 //user
 Route::get('/users/search', 'UserController@search')->name('users.search')->middleware('auth');
+
+//calendar
+Route::get('api/calendar/events', 'CalendarController@index')->name('calendars.events')->middleware('auth');
+
 
 
 

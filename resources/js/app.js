@@ -26,6 +26,8 @@ Vue.component('create-task', require('./components/events/CreateTask.vue').defau
 Vue.component('create-group', require('./components/groups/CreateGroup.vue').default);
 Vue.component('edit-group', require('./components/groups/EditGroup.vue').default);
 Vue.component('show-location', require('./components/maps/ShowLocation.vue').default);
+Vue.component('calendar', require('./components/calendar.vue').default);
+Vue.component('complete-task-list', require('./components/events/CompleteTaskList').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

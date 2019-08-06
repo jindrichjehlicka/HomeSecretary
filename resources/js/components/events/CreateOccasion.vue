@@ -34,7 +34,6 @@
                         <input type="time" class="form-control" id="occasionEndTime" placeholder=""
                                v-model="endTime">
                     </div>
-
                     <div class="form-group">
                         <location class="location" v-on:setLatLong="setLatLong"></location>
                     </div>
@@ -63,18 +62,7 @@
             }
         },
         data() {
-            return {
-                //TODO: delete after testing
-                name: 'An Occasion',
-                description: 'A very nice occasion',
-                startDate: '2019-08-17',
-                startTime: '16:00',
-                endDate: '2019-08-20',
-                endTime: '08:00',
-                latitude: '',
-                longitude: '',
-
-            }
+            return this.initialState()
         },
         methods: {
             createEvent() {
@@ -88,11 +76,10 @@
                     endDate: this.endDate,
                     endTime: this.endTime,
                 };
-                console.log(`/occasions/store`);
+                let vm = this;
                 axios.post(`/occasions/store`, params)
                     .then(function (response) {
-                        //add alert
-                        console.log(response);
+                        vm.resetWindow();
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -101,6 +88,26 @@
             setLatLong(latLong) {
                 this.longitude = latLong.long;
                 this.latitude = latLong.lat;
+            },
+            initialState() {
+                return {
+                    name: '',
+                    description: '',
+                    latitude: '',
+                    longitude: '',
+                    startDate: '',
+                    startTime: '',
+                    endDate: '',
+                    endTime: '',
+                    tasksList: [],
+                    taskListName: '',
+                    user: null,
+                    userNameSearch: '',
+                    suggestions: []
+                }
+            },
+            resetWindow() {
+                Object.assign(this.$data, this.initialState());
             }
         },
 

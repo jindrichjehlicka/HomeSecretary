@@ -114,7 +114,6 @@
                     })
                         .then(function (response) {
                             vm.suggestions = response.data;
-                            console.log(response);
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -144,7 +143,6 @@
                 axios.post("/tasks/store", params)
                     .then(function (response) {
                         vm.resetWindow();
-                        console.log(response);
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -177,11 +175,9 @@
                 }
             },
             resetWindow() {
-                // Object.assign(this.$data, this.initialState());
+                Object.assign(this.$data, this.initialState());
             }
         },
-
-
     }
 </script>
 <style scoped>
@@ -200,10 +196,6 @@
     li {
         justify-content: space-between;
         align-items: center;
-    }
-
-    .block {
-        display: block
     }
 
     .space-between {
