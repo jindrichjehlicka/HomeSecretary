@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOccasionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('occasions', function (Blueprint $table) {
@@ -26,17 +21,11 @@ class CreateOccasionsTable extends Migration
             $table->softDeletes();
         });
 
-
         Schema::table('occasions', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('occasions');

@@ -1,29 +1,25 @@
 <template>
-
     <div>
         <div class="form-group ">
             <label for="mapLocation">Location - Street name and city</label>
-            <input type="text" class="form-control" id="mapLocation" placeholder="" v-model="searchText"
+            <input type="text" class="form-control" id="mapLocation"
+                   placeholder=""
+                   v-model="searchText"
                    @change="geocode()">
         </div>
-        <!--TODO: add different inputs for occasions and tasks-->
         <div style="width:100%;height: 260px" id="mapContainer" ></div>
     </div>
 
 </template>
-
 <script>
-
-
     export default {
-
         data() {
             return {
                 latitude: 52.5,
                 longitude: 13,
                 locationName: '',
                 map: {},
-                //TODO put into env\`
+                //TODO: Must be put into env. file
                 platform: new H.service.Platform({
                     'apikey': '9ikH2Uo_Ngu304J96SFsi9KKRe9mL628WHqmAR2I0JA'
                 }),
@@ -35,6 +31,16 @@
                 group: null,
                 position: null,
                 searchText: ''
+            }
+        },
+        props:{
+            lat:{
+                required:false,
+                default:52.5
+            },
+            long:{
+                required:false,
+                default: 13
             }
         },
         methods: {
@@ -72,6 +78,7 @@
                 let locations = result.response.view[0].result;
                 this.latitude = locations[0].location.displayPosition.latitude;
                 this.longitude = locations[0].location.displayPosition.longitude;
+                console.log('emiting');
                 this.$emit('setLatLong',{
                     long:this.longitude,
                     lat:this.latitude
@@ -100,7 +107,9 @@
             }
         },
 
-        mounted() {
+        async mounted() {
+            this.longitude = await this.long;
+            this.latitude = await this.lat;
             this.initializeMap()
         }
     }
